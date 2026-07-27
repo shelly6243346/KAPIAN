@@ -4,8 +4,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#16483c" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="卡期管家" />
     <meta name="description" content="卡期管家：记录银行卡、证件和会员卡有效期，提前提醒，避免过期。" />
     <title>卡期管家</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./app-icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./app-icon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -36,6 +43,12 @@
       </header>
 
       <main>
+        <section class="install-banner" id="install-banner" hidden>
+          <div class="mini-app-icon">期</div>
+          <div><strong>安装“卡期管家”App</strong><p>添加到手机桌面，像普通 App 一样全屏使用。</p></div>
+          <button id="install-app-button">安装</button>
+          <button class="dismiss-install" id="dismiss-install" aria-label="暂不安装">×</button>
+        </section>
         <section class="hero">
           <div>
             <p class="eyebrow">你的到期事项，一目了然</p>
