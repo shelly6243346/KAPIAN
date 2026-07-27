@@ -1,0 +1,14 @@
+{
+  "name": "卡期管家 KAPIAN",
+  "short_name": "卡期管家",
+  "description": "记录银行卡、证件、保险和会员卡有效期，提前提醒。",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f8f5ed",
+  "theme_color": "#16483c",
+  "categories": ["productivity", "utilities", "finance"],
+  "icons": [{"src":"./app-icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
