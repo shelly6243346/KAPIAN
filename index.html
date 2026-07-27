@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#16483c" />
+    <meta name="description" content="卡期管家：记录银行卡、证件和会员卡有效期，提前提醒，避免过期。" />
+    <title>卡期管家</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="卡期管家首页">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 48 52"><path d="M24 3c6 5 12 7 19 8v15c0 11-7 18-19 23C12 44 5 37 5 26V11c7-1 13-3 19-8Z"/><rect x="14" y="17" width="20" height="18" rx="3"/><path d="M18 14v6M30 14v6M14 23h20M19 28h2M27 28h2"/></svg>
+          </span>
+          <span>卡期管家</span>
+        </a>
+        <nav class="nav" aria-label="主导航">
+          <button class="nav-link active" data-view="home">首页</button>
+          <button class="nav-link" data-view="all">所有卡片</button>
+          <button class="nav-link" data-view="reminders">提醒</button>
+        </nav>
+        <div class="profile">
+          <button class="icon-button notification-button" aria-label="查看提醒">
+            <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>
+            <span class="notification-dot"></span>
+          </button>
+          <span class="avatar">S</span>
+          <span class="profile-name">Shelly</span>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero">
+          <div>
+            <p class="eyebrow">你的到期事项，一目了然</p>
+            <h1><span id="greeting">下午好</span>，Shelly</h1>
+            <p>提前掌握重要卡片和证件的到期时间，避免过期带来的不便。</p>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="calendar-sheet">
+              <span></span><span></span><span></span><span></span><span></span><span></span>
+              <div class="check">✓</div>
+            </div>
+            <div class="shield">✓</div>
+          </div>
+        </section>
+
+        <section class="summary-grid" aria-label="卡片统计">
+          <article class="summary-card">
+            <span class="summary-icon green">
+              <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18M7 15h4"/></svg>
+            </span>
+            <div><strong id="total-count">0</strong><span>张卡片</span></div>
+          </article>
+          <article class="summary-card">
+            <span class="summary-icon amber">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>
+            </span>
+            <div><strong id="soon-count">0</strong><span>即将到期</span></div>
+          </article>
+          <article class="summary-card">
+            <span class="summary-icon coral">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 17h.01"/></svg>
+            </span>
+            <div><strong id="expired-count">0</strong><span>已过期</span></div>
+          </article>
+          <button class="add-card-button" id="add-card-button">
+            <span>＋</span> 添加卡片
+          </button>
+        </section>
+
+        <section class="cards-section">
+          <div class="section-heading">
+            <div>
+              <h2 id="section-title">即将到期</h2>
+              <p id="section-description">需要你留意的卡片与证件</p>
+            </div>
+            <div class="toolbar">
+              <label class="search">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                <input id="search-input" type="search" placeholder="搜索卡片" aria-label="搜索卡片" />
+              </label>
+              <select id="category-filter" aria-label="按类别筛选">
+                <option value="all">全部类别</option>
+                <option value="bank">银行卡</option>
+                <option value="identity">证件</option>
+                <option value="insurance">保险</option>
+                <option value="membership">会员卡</option>
+                <option value="other">其他</option>
+              </select>
+            </div>
+          </div>
+          <div class="card-grid" id="card-grid"></div>
+          <div class="empty-state" id="empty-state" hidden>
+            <div>＋</div>
+            <h3>还没有符合条件的卡片</h3>
+            <p>添加第一张卡片，卡期管家会帮你计算到期时间。</p>
+            <button class="text-button" id="empty-add-button">添加卡片</button>
+          </div>
+        </section>
+
+        <section class="privacy-note">
+          <span>🔒</span>
+          <div>
+            <strong>隐私优先</strong>
+            <p>数据仅保存在当前浏览器。请勿填写完整银行卡号、CVV 或密码。</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal-backdrop" id="modal-backdrop" hidden>
+      <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-header">
+          <div>
+            <p class="eyebrow">CARD DETAILS</p>
+            <h2 id="modal-title">添加卡片</h2>
+          </div>
+          <button class="close-button" id="close-modal" aria-label="关闭">×</button>
+        </div>
+        <form id="card-form">
+          <input type="hidden" id="card-id" />
+          <div class="form-grid">
+            <label class="full">卡片名称<input id="card-name" required maxlength="40" placeholder="例如：美国护照" /></label>
+            <label>类别
+              <select id="card-category" required>
+                <option value="identity">证件</option>
+                <option value="bank">银行卡</option>
+                <option value="insurance">保险</option>
+                <option value="membership">会员卡</option>
+                <option value="other">其他</option>
+              </select>
+            </label>
+            <label>有效期<input id="card-expiry" type="date" required /></label>
+            <label>尾号（可选）<input id="card-last4" inputmode="numeric" maxlength="4" pattern="[0-9]{0,4}" placeholder="仅填写后四位" /></label>
+            <label>提醒时间
+              <select id="card-reminder">
+                <option value="90">提前 90 天</option>
+                <option value="60">提前 60 天</option>
+                <option value="30" selected>提前 30 天</option>
+                <option value="14">提前 14 天</option>
+                <option value="7">提前 7 天</option>
+              </select>
+            </label>
+            <label class="full">备注<textarea id="card-note" maxlength="160" placeholder="续期要求、联系电话或其他说明"></textarea></label>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="danger-button" id="delete-card" hidden>删除卡片</button>
+            <span class="action-spacer"></span>
+            <button type="button" class="secondary-button" id="cancel-modal">取消</button>
+            <button type="submit" class="primary-button">保存卡片</button>
+          </div>
+        </form>
+      </section>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
