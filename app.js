@@ -151,3 +151,33 @@ document.querySelector(".notification-button").addEventListener("click", () => {
 const hour = new Date().getHours();
 $("greeting").textContent = hour < 6 ? "夜深了" : hour < 12 ? "早上好" : hour < 18 ? "下午好" : "晚上好";
 render();
+
+let deferredInstallPrompt = null;
+const installBanner = $("install-banner");
+window.addEventListener("beforeinstallprompt", event => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  if (localStorage.getItem("kapian_install_dismissed") !== "yes") installBanner.hidden = false;
+});
+$("install-app-button").addEventListener("click", async () => {
+  if (deferredInstallPrompt) {
+    deferredInstallPrompt.prompt();
+    const result = await deferredInstallPrompt.userChoice;
+    if (result.outcome === "accepted") toast("卡期管家已安装");
+    deferredInstallPrompt = null;
+    installBanner.hidden = true;
+  } else {
+    toast("iPhone：点击分享按钮，再选择“添加到主屏幕”");
+  }
+});
+$("dismiss-install").addEventListener("click", () => {
+  installBanner.hidden = true;
+  localStorage.setItem("kapian_install_dismissed", "yes");
+});
+window.addEventListener("appinstalled", () => {
+  installBanner.hidden = true;
+  toast("安装完成");
+});
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js"));
+}
